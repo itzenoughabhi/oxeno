@@ -1,0 +1,76 @@
+.home-hero {
+  padding: 88px 24px 64px;
+  display: flex;
+  justify-content: center;
+  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 40%), #ffffff;
+}
+
+.home-hero__content {
+  max-width: 820px;
+  text-align: center;
+}
+
+.home-hero__eyebrow {
+  margin-bottom: 16px;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #2563eb;
+  font-size: 0.9rem;
+}
+
+.home-hero__content h1 {
+  margin: 0;
+  font-size: clamp(2.75rem, 4vw, 4.5rem);
+  line-height: 1.02;
+  color: #0f172a;
+}
+
+.home-hero__text {
+  margin: 24px auto 0;
+  max-width: 680px;
+  color: #475569;
+  line-height: 1.8;
+  font-size: 1.05rem;
+}
+
+.home-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.button {
+  border: none;
+  border-radius: 999px;
+  padding: 14px 24px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+}
+
+.button:hover {
+  transform: translateY(-2px);
+}
+
+.button--primary {
+  background: #2563eb;
+  color: white;
+}
+
+.button--secondary {
+  background: rgba(37, 99, 235, 0.08);
+  color: #2563eb;
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding: 64px 16px 48px;
+  }
+
+  .home-hero__content h1 {
+    font-size: 2.5rem;
+  }
+}
