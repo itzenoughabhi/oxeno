@@ -30,8 +30,16 @@
 }
 
 @media (max-width: 760px) {
+  .stats {
+    padding: var(--space-6) var(--container-pad);
+  }
+
   .stats__grid {
     grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-6);
+    gap: var(--space-5) var(--space-4);
+  }
+
+  .stat__label {
+    font-size: .8125rem;
   }
 }

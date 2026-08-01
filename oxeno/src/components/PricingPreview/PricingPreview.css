@@ -173,7 +173,24 @@
 }
 
 @media (max-width: 640px) {
+  .pricing__header {
+    margin-bottom: 2rem;
+  }
+
   .pricing__grid {
     grid-template-columns: 1fr;
+  }
+
+  .price-card {
+    border-radius: var(--radius-xl);
+    padding: 1.5rem;
+  }
+
+  .price-card__features {
+    margin-top: 1.5rem;
+  }
+
+  .price-card__button {
+    margin-top: 1.5rem;
   }
 }

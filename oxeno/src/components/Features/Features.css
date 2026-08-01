@@ -77,5 +77,17 @@
 @media (max-width: 640px) {
   .features__grid {
     grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+
+  .feature-card {
+    border-radius: var(--radius-lg);
+    padding: var(--space-4);
+  }
+
+  .feature-card__icon {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 16px;
   }
 }

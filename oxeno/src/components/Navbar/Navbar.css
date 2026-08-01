@@ -136,15 +136,51 @@
 }
 
 .navbar__login {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
   font-size: 0.9375rem;
-  font-weight: 500;
-  color: var(--color-ink-700);
-  padding: 10px 4px;
-  transition: color var(--dur-fast) var(--ease-out);
+  font-weight: 600;
+  color: var(--color-primary-700);
+  background: rgba(255, 255, 255, 0.72);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-full);
+  padding: 10px 19px;
+  box-shadow: var(--shadow-xs);
+  overflow: hidden;
+  isolation: isolate;
+  transition:
+    color var(--dur-fast) var(--ease-out),
+    border-color var(--dur-base) var(--ease-out),
+    box-shadow var(--dur-base) var(--ease-out),
+    transform var(--dur-base) var(--ease-out);
+}
+
+.navbar__login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--gradient-primary);
+  opacity: 0;
+  transition: opacity var(--dur-base) var(--ease-out);
 }
 
 .navbar__login:hover {
-  color: var(--color-primary-600);
+  color: #fff;
+  border-color: transparent;
+  box-shadow: var(--shadow-glow);
+  transform: translateY(-2px);
+}
+
+.navbar__login:hover::before {
+  opacity: 1;
+}
+
+.navbar__login:active {
+  transform: translateY(0) scale(0.98);
 }
 
 .navbar__toggle {
@@ -298,5 +334,30 @@
 
   .navbar__toggle {
     display: flex;
+  }
+}
+
+@media (max-width: 640px) {
+  .navbar__inner {
+    gap: 12px;
+  }
+
+  .navbar__logo-mark,
+  .navbar__logo-dot {
+    width: 28px;
+    height: 28px;
+  }
+
+  .navbar__logo-text {
+    font-size: 1.125rem;
+  }
+
+  .navbar__mobile {
+    padding: 28px var(--container-pad) 36px;
+  }
+
+  .navbar__mobile-links a {
+    font-size: 1.25rem;
+    padding: 13px 0;
   }
 }

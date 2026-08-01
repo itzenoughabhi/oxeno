@@ -148,3 +148,41 @@
     display: none;
   }
 }
+
+@media (max-width: 640px) {
+  .dashboard-panel {
+    border-radius: var(--radius-xl);
+    padding: 14px;
+  }
+
+  .dashboard-grid {
+    gap: 14px;
+  }
+
+  .dpanel {
+    border-radius: var(--radius-md);
+    padding: 16px;
+  }
+
+  .chart-bars {
+    height: 100px;
+    gap: 5px;
+  }
+
+  .dlist .row {
+    align-items: flex-start;
+    gap: 6px;
+    padding: 10px;
+  }
+
+  .dlist .row span:last-child {
+    flex-shrink: 0;
+    font-size: .75rem;
+  }
+
+  .ai-badge {
+    align-items: flex-start;
+    padding: 12px;
+    line-height: 1.5;
+  }
+}

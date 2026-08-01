@@ -126,8 +126,13 @@
 }
 
 @media (max-width: 768px) {
+  .footer {
+    padding: 52px var(--container-pad) 20px;
+  }
+
   .footer-container {
     grid-template-columns: 1fr;
+    gap: 36px;
     text-align: center;
   }
 
@@ -141,7 +146,13 @@
   }
 
   .footer-links {
+    gap: 12px 20px;
     flex-wrap: wrap;
     justify-content: center;
+  }
+
+  .footer-btn {
+    width: 100%;
+    max-width: 280px;
   }
 }

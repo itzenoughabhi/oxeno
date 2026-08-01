@@ -312,3 +312,68 @@
     transform: none;
   }
 }
+
+@media (max-width: 640px) {
+  .hero {
+    padding: calc(var(--nav-height) + var(--space-5)) 0 var(--space-8);
+  }
+
+  .hero__inner {
+    gap: var(--space-6);
+  }
+
+  .hero__content {
+    text-align: center;
+  }
+
+  .hero__subtext {
+    margin-inline: auto;
+    font-size: 1rem;
+  }
+
+  .hero__actions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    margin-top: 28px;
+  }
+
+  .hero__actions .btn {
+    width: 100%;
+  }
+
+  .hero__proof {
+    justify-content: center;
+    align-items: flex-start;
+    margin-top: 28px;
+    text-align: left;
+  }
+
+  .hero__visual {
+    margin-top: 8px;
+  }
+
+  .dash-mock {
+    border-radius: var(--radius-xl);
+    padding: 14px;
+  }
+
+  .dash-mock__top {
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+
+  .dash-mock__body {
+    gap: 10px;
+  }
+
+  .dash-mock__chart {
+    height: 126px;
+    padding: 14px;
+    gap: 6px;
+  }
+
+  .dash-mock__stat {
+    padding: 12px;
+  }
+}
