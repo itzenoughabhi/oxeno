@@ -16,12 +16,10 @@ export default function CTA() {
           <div className="cta__glow cta__glow--bottom" />
 
           <div className="cta__content">
-            <h2 className="cta__title">
-              Ready to grow your business?
-            </h2>
+            <h2 className="cta__title">Ready to grow your business?</h2>
             <p className="cta__subtitle">
-              Join thousands of businesses using Oxeno to turn one-time
-              visitors into lifelong customers.
+              Join thousands of businesses using Oxeno to turn one-time visitors
+              into lifelong customers.
             </p>
             <div className="cta__actions">
               <button className="cta__button cta__button--primary">

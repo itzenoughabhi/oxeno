@@ -11,7 +11,10 @@
   color: var(--color-ink-700);
   border: 1px solid var(--color-border-strong);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
 
 .signup__back:hover {
@@ -118,9 +121,9 @@
 
 .signup__success {
   font-size: 0.9375rem;
-  color: #15803D;
-  background: #F0FDF4;
-  border: 1px solid #BBF7D0;
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
   border-radius: var(--radius-sm);
   padding: 12px 14px;
 }
@@ -140,7 +143,9 @@
   border-radius: var(--radius-lg);
   padding: var(--space-4);
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease-out), box-shadow var(--dur-fast) var(--ease-out);
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
+    box-shadow var(--dur-fast) var(--ease-out);
 }
 
 .plan-card.is-selected {

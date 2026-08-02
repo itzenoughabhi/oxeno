@@ -25,8 +25,8 @@ export default function QRCodeSection() {
             One Scan. Unlimited Possibilities.
           </h2>
           <p className="qr-section__desc">
-            A single QR code turns every visit into a loyalty moment — no
-            app download, no friction, just a scan.
+            A single QR code turns every visit into a loyalty moment — no app
+            download, no friction, just a scan.
           </p>
 
           <ul className="qr-benefits">
@@ -47,9 +47,7 @@ export default function QRCodeSection() {
         <div className="qr-visual">
           <div className="qr-card">
             <div className="qr-card__code" />
-            <p className="qr-card__label">
-              Scan to earn 50 points
-            </p>
+            <p className="qr-card__label">Scan to earn 50 points</p>
           </div>
 
           <div className="qr-phone">

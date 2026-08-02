@@ -2,7 +2,7 @@ openapi: 3.1.1
 info:
   title: Oxeno API
   version: 1.0.0
-  description: Express API for Oxeno business accounts and authentication.
+  description: Express API for Oxeno business-owner and customer accounts.
 servers:
   - url: http://localhost:3001
 security:
@@ -95,6 +95,67 @@ paths:
                     $ref: "#/components/schemas/TokenClaims"
         "401":
           $ref: "#/components/responses/Unauthorized"
+  /api/customer/business-categories:
+    get:
+      security: []
+      summary: List active business categories available to customers
+      responses:
+        "200":
+          description: Active business categories.
+  /api/customer/businesses:
+    get:
+      security: []
+      summary: List active businesses for a category
+      parameters:
+        - in: query
+          name: category
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Matching businesses.
+  /api/customer-auth/signup:
+    post:
+      security: []
+      summary: Create a customer account for a selected business
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerSignupRequest"
+      responses:
+        "201":
+          description: Customer account and Bearer token created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /api/customer-auth/login:
+    post:
+      security: []
+      summary: Log in to a customer account with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CustomerLoginRequest"
+      responses:
+        "200":
+          description: Customer account and Bearer token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /api/customer-dashboard:
+    get:
+      summary: Get the signed-in customer's profile, selected business, and loyalty balances
+      responses:
+        "200":
+          description: Customer dashboard data.
+        "401":
+          $ref: "#/components/responses/Unauthorized"
 components:
   securitySchemes:
     bearerAuth:
@@ -144,6 +205,37 @@ components:
         agreeTerms: { type: boolean }
         agreePrivacy: { type: boolean }
     LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, format: password }
+    CustomerSignupRequest:
+      type: object
+      required:
+        - businessId
+        - fullName
+        - email
+        - whatsappNumber
+        - birthDate
+        - isMarried
+        - gender
+        - city
+        - password
+        - confirmPassword
+      properties:
+        businessId: { type: string, format: uuid }
+        fullName: { type: string }
+        email: { type: string, format: email }
+        whatsappNumber: { type: string }
+        birthDate: { type: string, format: date }
+        isMarried: { type: boolean }
+        anniversaryDate: { type: string, format: date, nullable: true }
+        gender: { type: string, enum: [male, female, non_binary, prefer_not_to_say, other] }
+        city: { type: string }
+        password: { type: string, format: password, minLength: 8 }
+        confirmPassword: { type: string, format: password }
+    CustomerLoginRequest:
       type: object
       required: [email, password]
       properties:

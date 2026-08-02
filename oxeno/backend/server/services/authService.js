@@ -1,5 +1,3 @@
-import { randomBytes, scrypt as scryptCallback, timingSafeEqual } from "node:crypto";
-import { promisify } from "node:util";
 import { OAuth2Client } from "google-auth-library";
 import { RequestError } from "../errors/RequestError.js";
 import {
@@ -9,28 +7,11 @@ import {
   updateLastLogin,
 } from "../repositories/authRepository.js";
 import { createAccessToken } from "./tokenService.js";
+import { hashPassword, verifyPassword } from "./passwordService.js";
 
-const scrypt = promisify(scryptCallback);
 const googleClientId = process.env.GOOGLE_CLIENT_ID?.trim();
 const googleClient = googleClientId ? new OAuth2Client(googleClientId) : null;
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-async function hashPassword(password) {
-  const salt = randomBytes(16).toString("base64url");
-  const derivedKey = await scrypt(password, salt, 64);
-  return `scrypt$${salt}$${Buffer.from(derivedKey).toString("base64url")}`;
-}
-
-async function verifyPassword(password, passwordHash) {
-  const [algorithm, salt, encodedHash] = passwordHash.split("$");
-  if (algorithm !== "scrypt" || !salt || !encodedHash) {
-    return false;
-  }
-
-  const expectedHash = Buffer.from(encodedHash, "base64url");
-  const actualHash = Buffer.from(await scrypt(password, salt, expectedHash.length));
-  return actualHash.length === expectedHash.length && timingSafeEqual(actualHash, expectedHash);
-}
 
 function accountResponse(user) {
   return {

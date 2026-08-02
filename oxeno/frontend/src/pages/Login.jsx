@@ -9,7 +9,11 @@ import "./Login.css";
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function Login({ onNavigate, onLogin }) {
-  const [form, setForm] = useState({ email: "", password: "", rememberMe: false });
+  const [form, setForm] = useState({
+    email: "",
+    password: "",
+    rememberMe: false,
+  });
   const [errors, setErrors] = useState({});
   const [status, setStatus] = useState(null); // null | "success" | "error"
   const [showCreateAccountPrompt, setShowCreateAccountPrompt] = useState(false);
@@ -45,28 +49,37 @@ export default function Login({ onNavigate, onLogin }) {
       onLogin?.(response.account, form.rememberMe, response.accessToken);
     } catch (err) {
       setStatus("error");
-      setErrors({ form: err.message || "Login failed. Check your email and password and try again." });
+      setErrors({
+        form:
+          err.message ||
+          "Login failed. Check your email and password and try again.",
+      });
     }
   }
 
-  const handleGoogleCredential = useCallback(async (credential) => {
-    try {
-      setStatus("loading");
-      setErrors({});
-      const response = await loginWithGoogle(credential);
-      setStatus("success");
-      onLogin?.(response.account, form.rememberMe, response.accessToken);
-    } catch (err) {
-      if (err.code === "account_not_found") {
-        setStatus(null);
-        setShowCreateAccountPrompt(true);
-        return;
-      }
+  const handleGoogleCredential = useCallback(
+    async (credential) => {
+      try {
+        setStatus("loading");
+        setErrors({});
+        const response = await loginWithGoogle(credential);
+        setStatus("success");
+        onLogin?.(response.account, form.rememberMe, response.accessToken);
+      } catch (err) {
+        if (err.code === "account_not_found") {
+          setStatus(null);
+          setShowCreateAccountPrompt(true);
+          return;
+        }
 
-      setStatus("error");
-      setErrors({ form: err.message || "Google login failed. Please try again." });
-    }
-  }, [form.rememberMe, onLogin]);
+        setStatus("error");
+        setErrors({
+          form: err.message || "Google login failed. Please try again.",
+        });
+      }
+    },
+    [form.rememberMe, onLogin],
+  );
 
   const handleGoogleError = useCallback((message) => {
     setStatus("error");
@@ -98,7 +111,9 @@ export default function Login({ onNavigate, onLogin }) {
               placeholder="you@business.com"
               className={`field__input ${errors.email ? "field__input--error" : ""}`}
             />
-            {errors.email && <span className="field__error">{errors.email}</span>}
+            {errors.email && (
+              <span className="field__error">{errors.email}</span>
+            )}
           </label>
 
           <label className="field">
@@ -111,7 +126,9 @@ export default function Login({ onNavigate, onLogin }) {
               placeholder="••••••••"
               className={`field__input ${errors.password ? "field__input--error" : ""}`}
             />
-            {errors.password && <span className="field__error">{errors.password}</span>}
+            {errors.password && (
+              <span className="field__error">{errors.password}</span>
+            )}
           </label>
 
           <div className="login__options">
@@ -124,7 +141,9 @@ export default function Login({ onNavigate, onLogin }) {
               />
               Remember Me
             </label>
-            <a href="#" className="login__link">Forgot Password?</a>
+            <a href="#" className="login__link">
+              Forgot Password?
+            </a>
           </div>
 
           {errors.form && <p className="login__form-error">{errors.form}</p>}
@@ -132,7 +151,11 @@ export default function Login({ onNavigate, onLogin }) {
             <p className="login__form-success">Logged in successfully.</p>
           )}
 
-          <button type="submit" className="btn btn-primary btn-block btn-lg" disabled={status === "loading"}>
+          <button
+            type="submit"
+            className="btn btn-primary btn-block btn-lg"
+            disabled={status === "loading"}
+          >
             {status === "loading" ? "Logging in..." : "Login"}
           </button>
 
@@ -161,7 +184,9 @@ export default function Login({ onNavigate, onLogin }) {
               aria-modal="true"
               aria-labelledby="google-account-not-found-title"
             >
-              <h3 id="google-account-not-found-title">Create an Oxeno account</h3>
+              <h3 id="google-account-not-found-title">
+                Create an Oxeno account
+              </h3>
               <p>This Google email does not have an Oxeno account yet.</p>
               <div className="login__modal-actions">
                 <button

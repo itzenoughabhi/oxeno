@@ -29,7 +29,9 @@ export default function AuthLayout({ onNavigate, children }) {
           <span className="auth-layout__eyebrow">AI Customer Growth OS</span>
           <h1 className="auth-layout__headline">
             Turn Every Customer Visit Into{" "}
-            <span className="auth-layout__headline-accent">Loyalty Growth AI</span>
+            <span className="auth-layout__headline-accent">
+              Loyalty Growth AI
+            </span>
           </h1>
           <p className="auth-layout__text">
             Oxeno helps businesses retain customers through AI-powered

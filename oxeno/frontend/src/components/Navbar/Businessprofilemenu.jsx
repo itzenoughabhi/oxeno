@@ -13,7 +13,12 @@ function initialsFor(name) {
     .toUpperCase();
 }
 
-export default function BusinessProfileMenu({ account, onNavigate, onLogout }) {
+export default function BusinessProfileMenu({
+  account,
+  onNavigate,
+  onLogout,
+  dashboardPage = "dashboard",
+}) {
   const [open, setOpen] = useState(false);
   const name = account?.user?.name || "Account";
   const business = account?.business?.name || "Oxeno";
@@ -56,7 +61,7 @@ export default function BusinessProfileMenu({ account, onNavigate, onLogout }) {
             <button
               type="button"
               className="profile-menu__item"
-              onClick={() => selectItem(() => onNavigate?.("dashboard"))}
+              onClick={() => selectItem(() => onNavigate?.(dashboardPage))}
             >
               <LayoutDashboard size={16} /> Dashboard
             </button>

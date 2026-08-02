@@ -1,199 +1,486 @@
-// src/pages/Dashboard.jsx
+import { useEffect, useState } from "react";
 import {
-  Users, UserPlus, QrCode, Phone, MessageCircle, Star,
-  Cake, Heart, Megaphone, CreditCard,
+  ArrowUpRight,
+  BarChart3,
+  Bell,
+  Cake,
+  CalendarHeart,
+  ChartNoAxesCombined,
+  ChevronDown,
+  CircleHelp,
+  CreditCard,
+  Gift,
+  LayoutDashboard,
+  Megaphone,
+  Menu,
+  MessageCircle,
+  Phone,
+  QrCode,
+  Settings,
+  Sparkles,
+  Star,
+  Users,
+  UserPlus,
+  X,
 } from "lucide-react";
+import BusinessQuickActions from "../components/BusinessDashboard/BusinessQuickActions.jsx";
 import BusinessProfileMenu from "../components/Navbar/BusinessProfileMenu.jsx";
+import { getDashboardData } from "../services/api.js";
 import "./Dashboard.css";
 
-// TODO: replace all placeholder data below with real API data once the
-// backend/dashboard endpoints exist.
-
-const QUICK_STATS = [
-  { icon: Users, label: "Total Customers", value: "2,148" },
-  { icon: UserPlus, label: "New Registrations", value: "34", sub: "Today" },
-  { icon: QrCode, label: "QR Code Scans", value: "512", sub: "Today" },
-  { icon: Phone, label: "AI Voice Calls", value: "27", sub: "Today" },
-  { icon: MessageCircle, label: "WhatsApp Messages", value: "1,290", sub: "Today" },
-  { icon: Star, label: "Pending Review Requests", value: "9" },
-];
-
-const UPCOMING_BIRTHDAYS = [
-  { name: "Priya Nair", date: "Aug 4" },
-  { name: "Rohit Verma", date: "Aug 6" },
-  { name: "Sana Iyer", date: "Aug 9" },
-  { name: "Karan Shah", date: "Aug 12" },
-];
-
-const UPCOMING_ANNIVERSARIES = [
-  { name: "Neha Kapoor", date: "Aug 5", detail: "2 years with you" },
-  { name: "Arjun Mehta", date: "Aug 10", detail: "1 year with you" },
-  { name: "Divya Rao", date: "Aug 15", detail: "3 years with you" },
-];
-
-const ACTIVE_CAMPAIGNS = [
-  { name: "Weekend Loyalty Boost", status: "Live", metric: "92% opened" },
-  { name: "Win-back: 30-day inactive", status: "Live", metric: "44% redeemed" },
-  { name: "New store launch offer", status: "Scheduled", metric: "—" },
-];
-
-const SUBSCRIPTION = {
-  plan: "Growth",
-  status: "Active",
-  renews: "Sep 12, 2026",
+const FALLBACK_DASHBOARD = {
+  stats: [
+    { icon: "customers", label: "Total Customers", value: "0" },
+    {
+      icon: "registrations",
+      label: "New Registrations",
+      value: "0",
+      sub: "Today",
+    },
+    { icon: "scans", label: "QR Code Scans", value: "0", sub: "Today" },
+    { icon: "calls", label: "AI Voice Calls", value: "0", sub: "Today" },
+    { icon: "messages", label: "WhatsApp Messages", value: "0", sub: "Today" },
+    { icon: "reviews", label: "Pending Review Requests", value: "0" },
+  ],
+  upcomingBirthdays: [],
+  upcomingAnniversaries: [],
+  activeCampaigns: [],
+  subscription: { plan: "Growth", status: "Active", renews: "Soon" },
+  usage: [
+    { label: "WhatsApp Usage", used: 0, limit: 5000, unit: "messages" },
+    { label: "AI Voice Usage", used: 0, limit: 200, unit: "minutes" },
+  ],
 };
 
-const USAGE = [
-  { label: "WhatsApp Usage", used: 1290, limit: 5000, unit: "messages" },
-  { label: "AI Voice Usage", used: 27, limit: 200, unit: "minutes" },
+const STAT_ICON_MAP = {
+  customers: Users,
+  registrations: UserPlus,
+  scans: QrCode,
+  calls: Phone,
+  messages: MessageCircle,
+  reviews: Star,
+};
+
+const navigationItems = [
+  { id: "overview", label: "Dashboard", icon: LayoutDashboard },
+  { id: "customers", label: "Customers", icon: Users },
+  { id: "rewards-studio", label: "Rewards studio", icon: Gift },
+  { id: "campaigns", label: "Campaigns", icon: Megaphone },
+  { id: "qr-loyalty", label: "QR loyalty", icon: QrCode },
+  { id: "analytics", label: "Analytics", icon: ChartNoAxesCombined },
+  { id: "settings", label: "Settings", icon: Settings },
 ];
+
+function initialsFor(name) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0])
+    .join("")
+    .toUpperCase();
+}
 
 export default function Dashboard({ onNavigate, account, onLogout }) {
   const ownerName = account?.user?.name || "there";
   const businessName = account?.business?.name || "your business";
   const firstName = ownerName.split(" ")[0];
+  const [dashboardData, setDashboardData] = useState(null);
+  const [activeItem, setActiveItem] = useState("overview");
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadDashboard() {
+      try {
+        const data = await getDashboardData();
+        if (!cancelled) setDashboardData(data);
+      } catch {
+        if (!cancelled) setDashboardData(FALLBACK_DASHBOARD);
+      }
+    }
+
+    loadDashboard();
+    return () => {
+      cancelled = true;
+    };
+  }, [account?.business?.id]);
+
+  const dashboard = dashboardData || FALLBACK_DASHBOARD;
+  const customerCount =
+    dashboard.stats.find((stat) => stat.icon === "customers")?.value || "0";
+
+  function selectNavigation(item) {
+    setActiveItem(item.id);
+    setMobileMenuOpen(false);
+    document
+      .getElementById(item.id)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
 
   return (
-    <div className="dashboard">
-      <header className="dashboard__topbar">
+    <div className="business-dashboard">
+      <aside
+        className={`business-dashboard__sidebar ${mobileMenuOpen ? "is-open" : ""}`}
+      >
         <a
           href="/"
-          className="dashboard__logo"
-          onClick={(e) => {
-            e.preventDefault();
+          className="business-dashboard__brand"
+          onClick={(event) => {
+            event.preventDefault();
             onNavigate?.("home");
           }}
         >
-          <span className="dashboard__logo-dot" />
-          <span className="dashboard__logo-text">OXENO</span>
+          <i />
+          <strong>OXENO</strong>
+          <span>STUDIO</span>
         </a>
-        <BusinessProfileMenu account={account} onNavigate={onNavigate} onLogout={onLogout} />
-      </header>
-
-      <main className="dashboard__body">
-        <div className="dashboard__intro">
-          <h1>Welcome back, {firstName}</h1>
-          <p>Here's what's happening with {businessName} today.</p>
+        <div className="business-dashboard__mobile-title">
+          <span>Workspace</span>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen(false)}
+            aria-label="Close menu"
+          >
+            <X size={18} />
+          </button>
         </div>
-
-        {/* Total Customers · New Registrations · QR Code Scans ·
-            AI Voice Calls · WhatsApp Messages · Pending Review Requests */}
-        <div className="dashboard__stats">
-          {QUICK_STATS.map((s) => (
-            <StatCard key={s.label} {...s} />
+        <div className="business-dashboard__workspace">
+          <span>{initialsFor(businessName)}</span>
+          <div>
+            <small>YOUR WORKSPACE</small>
+            <strong>{businessName}</strong>
+          </div>
+          <ChevronDown size={15} />
+        </div>
+        <nav
+          className="business-dashboard__nav"
+          aria-label="Business dashboard navigation"
+        >
+          {navigationItems.map(({ id, label, icon: Icon }) => (
+            <button
+              type="button"
+              className={activeItem === id ? "is-active" : ""}
+              key={id}
+              onClick={() => selectNavigation({ id })}
+            >
+              <Icon size={18} />
+              <span>{label}</span>
+              {id === "campaigns" && <i>New</i>}
+            </button>
           ))}
-        </div>
-
-        <div className="dashboard__row">
-          {/* Upcoming Birthdays */}
-          <ListCard title="Upcoming Birthdays" icon={Cake}>
-            {UPCOMING_BIRTHDAYS.map((b) => (
-              <li key={b.name} className="dashboard__list-row">
-                <span>{b.name}</span>
-                <span className="dashboard__list-date">{b.date}</span>
-              </li>
-            ))}
-          </ListCard>
-
-          {/* Upcoming Anniversaries */}
-          <ListCard title="Upcoming Anniversaries" icon={Heart}>
-            {UPCOMING_ANNIVERSARIES.map((a) => (
-              <li key={a.name} className="dashboard__list-row">
-                <span>
-                  {a.name}
-                  <span className="dashboard__list-detail"> · {a.detail}</span>
-                </span>
-                <span className="dashboard__list-date">{a.date}</span>
-              </li>
-            ))}
-          </ListCard>
-        </div>
-
-        <div className="dashboard__row dashboard__row--split">
-          {/* Active Campaigns */}
-          <div className="widget-card">
-            <div className="widget-card__head">
-              <Megaphone size={18} />
-              <h2>Active Campaigns</h2>
-            </div>
-            <ul className="dashboard__campaigns">
-              {ACTIVE_CAMPAIGNS.map((c) => (
-                <li key={c.name} className="dashboard__campaign-row">
-                  <div>
-                    <div className="dashboard__campaign-name">{c.name}</div>
-                    <div className="dashboard__campaign-metric">{c.metric}</div>
-                  </div>
-                  <span
-                    className={`dashboard__badge ${
-                      c.status === "Live" ? "dashboard__badge--live" : "dashboard__badge--scheduled"
-                    }`}
-                  >
-                    {c.status}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          <div className="dashboard__side">
-            {/* Subscription Status */}
-            <div className="widget-card">
-              <div className="widget-card__head">
-                <CreditCard size={18} />
-                <h2>Subscription Status</h2>
-              </div>
-              <div className="dashboard__sub">
-                <div className="dashboard__sub-plan">{SUBSCRIPTION.plan} Plan</div>
-                <span className="dashboard__badge dashboard__badge--live">
-                  {SUBSCRIPTION.status}
-                </span>
-              </div>
-              <p className="dashboard__sub-renew">Renews {SUBSCRIPTION.renews}</p>
-            </div>
-
-            {/* WhatsApp Usage · AI Voice Usage */}
-            <div className="widget-card">
-              <div className="widget-card__head">
-                <h2>Usage This Month</h2>
-              </div>
-              <div className="dashboard__usage-list">
-                {USAGE.map((u) => (
-                  <UsageBar key={u.label} {...u} />
-                ))}
-              </div>
-            </div>
+        </nav>
+        <div className="business-dashboard__sidebar-foot">
+          <button type="button" onClick={() => onNavigate?.("support")}>
+            <CircleHelp size={17} /> Help and support
+          </button>
+          <div>
+            <span />
+            <p>
+              <strong>All systems operational</strong>
+              <small>Your member experience is live.</small>
+            </p>
           </div>
         </div>
-      </main>
+      </aside>
+      {mobileMenuOpen && (
+        <button
+          className="business-dashboard__scrim"
+          type="button"
+          onClick={() => setMobileMenuOpen(false)}
+          aria-label="Close menu"
+        />
+      )}
+
+      <div className="business-dashboard__content">
+        <header className="business-dashboard__topbar">
+          <button
+            type="button"
+            className="business-dashboard__menu"
+            onClick={() => setMobileMenuOpen(true)}
+            aria-label="Open menu"
+          >
+            <Menu size={21} />
+          </button>
+          <div className="business-dashboard__topbar-title">
+            <span>OPERATIONS OVERVIEW</span>
+            <strong>Monday, August 3</strong>
+          </div>
+          <div className="business-dashboard__topbar-actions">
+            <label className="business-dashboard__search">
+              <BarChart3 size={16} />
+              <input
+                type="search"
+                placeholder="Search your workspace"
+                aria-label="Search your workspace"
+              />
+              <kbd>⌘ K</kbd>
+            </label>
+            <button
+              type="button"
+              className="business-dashboard__notification"
+              aria-label="Notifications"
+            >
+              <Bell size={18} />
+              <i />
+            </button>
+            <BusinessProfileMenu
+              account={account}
+              onNavigate={onNavigate}
+              onLogout={onLogout}
+            />
+          </div>
+        </header>
+
+        <main className="business-dashboard__main">
+          <section className="business-dashboard__hero" id="overview">
+            <div className="business-dashboard__hero-copy">
+              <span>
+                <Sparkles size={14} /> Your customer experience, at a glance
+              </span>
+              <h1>Welcome back, {firstName}.</h1>
+              <p>
+                Turn every visit at {businessName} into a relationship your
+                customers want to return to.
+              </p>
+              <button
+                type="button"
+                onClick={() => selectNavigation({ id: "rewards-studio" })}
+              >
+                Open rewards studio <ArrowUpRight size={16} />
+              </button>
+            </div>
+            <div className="business-dashboard__hero-metric">
+              <div>
+                <span>Community reach</span>
+                <strong>{customerCount}</strong>
+                <p>customers in your world</p>
+              </div>
+              <i>
+                <Users size={23} />
+              </i>
+              <small>
+                <em /> Live customer data
+              </small>
+            </div>
+          </section>
+
+          <section
+            className="business-dashboard__stats"
+            aria-label="Business summary"
+          >
+            {dashboard.stats.map((stat, index) => (
+              <StatCard key={stat.label} index={index} {...stat} />
+            ))}
+          </section>
+
+          <div id="rewards-studio">
+            <BusinessQuickActions />
+          </div>
+
+          <section className="business-dashboard__section-head" id="customers">
+            <div>
+              <span>CUSTOMER MOMENTS</span>
+              <h2>Make every milestone feel personal.</h2>
+            </div>
+            <button type="button">
+              Customer calendar <ArrowUpRight size={16} />
+            </button>
+          </section>
+          <section className="business-dashboard__moments">
+            <ListCard
+              title="Upcoming birthdays"
+              caption="Celebrate the people who choose you"
+              icon={Cake}
+              tone="coral"
+              items={dashboard.upcomingBirthdays}
+              detailKey="date"
+              emptyMessage="No birthdays coming up in the next 14 days."
+            />
+            <ListCard
+              title="Upcoming anniversaries"
+              caption="Recognise their special moments"
+              icon={CalendarHeart}
+              tone="violet"
+              items={dashboard.upcomingAnniversaries}
+              detailKey="date"
+              emptyMessage="No anniversaries coming up in the next 14 days."
+            />
+          </section>
+
+          <section className="business-dashboard__activity" id="campaigns">
+            <article className="business-dashboard__campaign-card">
+              <CardHeading
+                icon={Megaphone}
+                title="Campaign activity"
+                action="Manage campaigns"
+              />
+              {dashboard.activeCampaigns.length ? (
+                <ul>
+                  {dashboard.activeCampaigns.map((campaign) => (
+                    <li key={campaign.name}>
+                      <span className="business-dashboard__campaign-icon">
+                        <Megaphone size={16} />
+                      </span>
+                      <div>
+                        <strong>{campaign.name}</strong>
+                        <p>{campaign.metric}</p>
+                      </div>
+                      <em
+                        className={
+                          campaign.status === "Live"
+                            ? "is-live"
+                            : "is-scheduled"
+                        }
+                      >
+                        {campaign.status}
+                      </em>
+                      <ArrowUpRight size={16} />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <EmptyState
+                  icon={Megaphone}
+                  message="Your next campaign starts with a thoughtful message."
+                />
+              )}
+            </article>
+            <div className="business-dashboard__activity-side">
+              <article className="business-dashboard__subscription-card">
+                <CardHeading icon={CreditCard} title="Subscription" />
+                <div>
+                  <span>{dashboard.subscription.plan}</span>
+                  <em>{dashboard.subscription.status}</em>
+                </div>
+                <p>Renews {dashboard.subscription.renews}</p>
+                <button type="button">
+                  Manage plan <ArrowUpRight size={14} />
+                </button>
+              </article>
+              <article
+                className="business-dashboard__usage-card"
+                id="analytics"
+              >
+                <CardHeading
+                  icon={ChartNoAxesCombined}
+                  title="Usage this month"
+                />
+                <div>
+                  {dashboard.usage.map((usage) => (
+                    <UsageBar key={usage.label} {...usage} />
+                  ))}
+                </div>
+              </article>
+            </div>
+          </section>
+
+          <footer className="business-dashboard__footer">
+            <span>OXENO BUSINESS</span>
+            <p>Designed to make loyalty feel effortless.</p>
+            <div>
+              <button type="button">Privacy</button>
+              <button type="button">Support</button>
+              <button type="button" onClick={onLogout}>
+                Log out
+              </button>
+            </div>
+          </footer>
+        </main>
+      </div>
     </div>
   );
 }
 
-function StatCard({ icon: Icon, label, value, sub }) {
+function StatCard({ icon, label, value, sub, index }) {
+  const Icon = typeof icon === "string" ? STAT_ICON_MAP[icon] || Users : icon;
+  const tones = ["blue", "violet", "coral", "gold", "green", "pink"];
   return (
-    <div className="stat-card">
-      <span className="stat-card__icon">
-        <Icon size={18} />
+    <article
+      className={`business-stat business-stat--${tones[index % tones.length]}`}
+    >
+      <span>
+        <Icon size={19} />
       </span>
       <div>
-        <div className="stat-card__value">{value}</div>
-        <div className="stat-card__label">
-          {label}
-          {sub && <span className="stat-card__sub"> · {sub}</span>}
-        </div>
+        <p>{label}</p>
+        <strong>{value}</strong>
+        <small>{sub || "All time"}</small>
       </div>
+    </article>
+  );
+}
+
+function CardHeading({ icon: Icon, title, action }) {
+  return (
+    <div className="business-card-heading">
+      <div>
+        <span>
+          <Icon size={17} />
+        </span>
+        <h2>{title}</h2>
+      </div>
+      {action && (
+        <button type="button">
+          {action} <ArrowUpRight size={14} />
+        </button>
+      )}
     </div>
   );
 }
 
-function ListCard({ title, icon: Icon, children }) {
+function ListCard({
+  title,
+  caption,
+  icon,
+  tone,
+  items,
+  detailKey,
+  emptyMessage,
+}) {
+  const Icon = icon;
   return (
-    <div className="widget-card">
-      <div className="widget-card__head">
-        <Icon size={18} />
-        <h2>{title}</h2>
+    <article className={`business-moment-card business-moment-card--${tone}`}>
+      <div className="business-moment-card__head">
+        <span>
+          <Icon size={20} />
+        </span>
+        <div>
+          <h2>{title}</h2>
+          <p>{caption}</p>
+        </div>
+        <button type="button">
+          View all <ArrowUpRight size={14} />
+        </button>
       </div>
-      <ul className="dashboard__list">{children}</ul>
+      {items.length ? (
+        <ul>
+          {items.map((item) => (
+            <li key={`${item.name}-${item[detailKey]}`}>
+              <span>{initialsFor(item.name)}</span>
+              <strong>
+                {item.name}
+                <small>{item.detail || "Customer milestone"}</small>
+              </strong>
+              <time>{item[detailKey]}</time>
+            </li>
+          ))}
+        </ul>
+      ) : (
+        <EmptyState icon={Icon} message={emptyMessage} />
+      )}
+    </article>
+  );
+}
+
+function EmptyState({ icon: Icon, message }) {
+  return (
+    <div className="business-empty-state">
+      <span>
+        <Icon size={18} />
+      </span>
+      <p>{message}</p>
     </div>
   );
 }
@@ -201,16 +488,16 @@ function ListCard({ title, icon: Icon, children }) {
 function UsageBar({ label, used, limit, unit }) {
   const pct = Math.min(100, Math.round((used / limit) * 100));
   return (
-    <div className="usage-bar">
-      <div className="usage-bar__labels">
+    <div className="business-usage">
+      <div>
         <span>{label}</span>
-        <span>
+        <strong>
           {used.toLocaleString()} / {limit.toLocaleString()} {unit}
-        </span>
+        </strong>
       </div>
-      <div className="usage-bar__track">
-        <div className="usage-bar__fill" style={{ width: `${pct}%` }} />
-      </div>
+      <p>
+        <i style={{ width: `${pct}%` }} />
+      </p>
     </div>
   );
 }

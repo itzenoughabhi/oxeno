@@ -23,7 +23,6 @@ const Navbar = ({ onNavigate, account, onLogout }) => {
   return (
     <header className="navbar">
       <div className="navbar__inner container">
-
         {/* Logo */}
         <a
           href="/"
@@ -61,11 +60,30 @@ const Navbar = ({ onNavigate, account, onLogout }) => {
         {/* Desktop Actions */}
         <div className="navbar__actions">
           {account ? (
-            <BusinessProfileMenu account={account} onNavigate={go} onLogout={onLogout} />
+            <BusinessProfileMenu
+              account={account}
+              onNavigate={go}
+              onLogout={onLogout}
+              dashboardPage={
+                account.user?.role === "customer"
+                  ? "customer-dashboard"
+                  : "dashboard"
+              }
+            />
           ) : (
             <div className="navbar__guest-actions">
-              <button className="navbar__login" onClick={() => go("login")}>Login</button>
-              <button className="navbar__signup" onClick={() => go("signup")}>Sign Up</button>
+              <button className="navbar__login" onClick={() => go("login")}>
+                Login
+              </button>
+              <button className="navbar__signup" onClick={() => go("signup")}>
+                Sign Up
+              </button>
+              <button
+                className="navbar__customer"
+                onClick={() => go("customer-login")}
+              >
+                Customer
+              </button>
             </div>
           )}
         </div>
@@ -100,7 +118,16 @@ const Navbar = ({ onNavigate, account, onLogout }) => {
 
         <div className="navbar__mobile-actions">
           {account ? (
-            <BusinessProfileMenu account={account} onNavigate={go} onLogout={onLogout} />
+            <BusinessProfileMenu
+              account={account}
+              onNavigate={go}
+              onLogout={onLogout}
+              dashboardPage={
+                account.user?.role === "customer"
+                  ? "customer-dashboard"
+                  : "dashboard"
+              }
+            />
           ) : (
             <>
               <button
@@ -114,6 +141,12 @@ const Navbar = ({ onNavigate, account, onLogout }) => {
                 onClick={() => go("signup")}
               >
                 Sign Up
+              </button>
+              <button
+                className="navbar__mobile-button navbar__mobile-button--ghost"
+                onClick={() => go("customer-login")}
+              >
+                Customer Login
               </button>
             </>
           )}

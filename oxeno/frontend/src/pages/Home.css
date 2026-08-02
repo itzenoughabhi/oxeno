@@ -2,7 +2,9 @@
   padding: 88px 24px 64px;
   display: flex;
   justify-content: center;
-  background: radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 40%), #ffffff;
+  background:
+    radial-gradient(circle at top, rgba(37, 99, 235, 0.08), transparent 40%),
+    #ffffff;
 }
 
 .home-hero__content {
@@ -48,7 +50,10 @@
   padding: 14px 24px;
   font-size: 1rem;
   cursor: pointer;
-  transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
 }
 
 .button:hover {

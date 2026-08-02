@@ -10,18 +10,22 @@ export default function Hero() {
       <div className="hero__blob hero__blob--1" />
       <div className="hero__blob hero__blob--2" />
 
-      <div ref={ref} className={`hero__inner reveal ${visible ? "is-visible" : ""}`}>
+      <div
+        ref={ref}
+        className={`hero__inner reveal ${visible ? "is-visible" : ""}`}
+      >
         <div className="hero__content">
           <span className="hero__eyebrow">AI Customer Growth OS</span>
 
           <h1 className="hero__title">
-            Turn Every Customer Visit Into{' '}
+            Turn Every Customer Visit Into{" "}
             <span className="text-gradient">Loyalty Growth AI</span>
           </h1>
 
           <p className="hero__subtext">
-            Oxeno helps businesses retain customers through AI-powered campaigns,
-            QR-powered loyalty, smart automation, and real-time analytics.
+            Oxeno helps businesses retain customers through AI-powered
+            campaigns, QR-powered loyalty, smart automation, and real-time
+            analytics.
           </p>
 
           <div className="hero__actions">

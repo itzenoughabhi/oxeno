@@ -11,7 +11,10 @@
   color: var(--color-ink-700);
   border: 1px solid var(--color-border-strong);
   cursor: pointer;
-  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+  transition:
+    background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out),
+    transform var(--dur-fast) var(--ease-out);
 }
 
 .login__back:hover {
@@ -65,18 +68,18 @@
 
 .login__form-error {
   font-size: 0.875rem;
-  color: #DC2626;
-  background: #FEF2F2;
-  border: 1px solid #FECACA;
+  color: #dc2626;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
   border-radius: var(--radius-sm);
   padding: 10px 12px;
 }
 
 .login__form-success {
   font-size: 0.875rem;
-  color: #15803D;
-  background: #F0FDF4;
-  border: 1px solid #BBF7D0;
+  color: #15803d;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
   border-radius: var(--radius-sm);
   padding: 10px 12px;
 }

@@ -11,7 +11,8 @@
   border-radius: var(--radius-full);
   padding: 6px 14px 6px 6px;
   cursor: pointer;
-  transition: border-color var(--dur-fast) var(--ease-out),
+  transition:
+    border-color var(--dur-fast) var(--ease-out),
     box-shadow var(--dur-fast) var(--ease-out);
 }
 
@@ -110,11 +111,11 @@
 }
 
 .profile-menu__item--danger {
-  color: #DC2626;
+  color: #dc2626;
 }
 
 .profile-menu__item--danger:hover {
-  background: #FEF2F2;
+  background: #fef2f2;
 }
 
 .profile-menu__divider {

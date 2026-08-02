@@ -126,6 +126,10 @@ CREATE TABLE IF NOT EXISTS customers (
   mobile TEXT,
   birth_date DATE,
   anniversary_date DATE,
+  gender TEXT CHECK (gender IN ('male', 'female', 'non_binary', 'prefer_not_to_say', 'other')),
+  city TEXT,
+  is_married BOOLEAN NOT NULL DEFAULT FALSE,
+  password_hash TEXT,
   joined_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   is_active BOOLEAN NOT NULL DEFAULT TRUE,
   marketing_consent_at TIMESTAMPTZ,
@@ -135,6 +139,26 @@ CREATE TABLE IF NOT EXISTS customers (
   CONSTRAINT customers_email_per_business UNIQUE (business_id, email),
   CONSTRAINT customers_mobile_per_business UNIQUE (business_id, mobile)
 );
+
+ALTER TABLE customers
+  ADD COLUMN IF NOT EXISTS gender TEXT,
+  ADD COLUMN IF NOT EXISTS city TEXT,
+  ADD COLUMN IF NOT EXISTS is_married BOOLEAN NOT NULL DEFAULT FALSE,
+  ADD COLUMN IF NOT EXISTS password_hash TEXT;
+
+DO $$
+BEGIN
+  IF NOT EXISTS (
+    SELECT 1
+    FROM pg_constraint
+    WHERE conname = 'customers_gender_check'
+  ) THEN
+    ALTER TABLE customers
+      ADD CONSTRAINT customers_gender_check
+      CHECK (gender IN ('male', 'female', 'non_binary', 'prefer_not_to_say', 'other'));
+  END IF;
+END;
+$$;
 
 CREATE TABLE IF NOT EXISTS loyalty_programs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -156,6 +180,34 @@ CREATE TABLE IF NOT EXISTS loyalty_memberships (
   enrolled_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   CONSTRAINT loyalty_memberships_unique UNIQUE (loyalty_program_id, customer_id)
+);
+
+CREATE TABLE IF NOT EXISTS offers (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  business_id UUID NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+  title TEXT NOT NULL CHECK (btrim(title) <> ''),
+  description TEXT,
+  discount_label TEXT NOT NULL CHECK (btrim(discount_label) <> ''),
+  coupon_code TEXT,
+  expires_at TIMESTAMPTZ NOT NULL,
+  is_active BOOLEAN NOT NULL DEFAULT TRUE,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  CONSTRAINT offers_expiry_check CHECK (expires_at > created_at)
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS offers_business_coupon_code_unique_idx
+  ON offers (business_id, coupon_code)
+  WHERE coupon_code IS NOT NULL;
+
+CREATE TABLE IF NOT EXISTS loyalty_point_events (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  business_id UUID NOT NULL REFERENCES businesses(id) ON DELETE CASCADE,
+  customer_id UUID NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
+  loyalty_program_id UUID NOT NULL REFERENCES loyalty_programs(id) ON DELETE CASCADE,
+  points INTEGER NOT NULL CHECK (points <> 0),
+  note TEXT,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );
 
 CREATE TABLE IF NOT EXISTS qr_codes (
@@ -239,6 +291,12 @@ CREATE INDEX IF NOT EXISTS app_users_business_id_idx
   ON app_users (business_id);
 CREATE INDEX IF NOT EXISTS customers_business_joined_idx
   ON customers (business_id, joined_at DESC);
+CREATE UNIQUE INDEX IF NOT EXISTS customers_mobile_unique_idx
+  ON customers (mobile)
+  WHERE mobile IS NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS customers_email_unique_idx
+  ON customers (email)
+  WHERE email IS NOT NULL;
 CREATE INDEX IF NOT EXISTS customers_business_birth_date_idx
   ON customers (business_id, birth_date)
   WHERE birth_date IS NOT NULL;
@@ -247,6 +305,12 @@ CREATE INDEX IF NOT EXISTS customers_business_anniversary_date_idx
   WHERE anniversary_date IS NOT NULL;
 CREATE INDEX IF NOT EXISTS loyalty_programs_business_id_idx
   ON loyalty_programs (business_id);
+CREATE INDEX IF NOT EXISTS offers_business_active_expiry_idx
+  ON offers (business_id, is_active, expires_at);
+CREATE INDEX IF NOT EXISTS loyalty_point_events_customer_created_idx
+  ON loyalty_point_events (customer_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS loyalty_point_events_business_created_idx
+  ON loyalty_point_events (business_id, created_at DESC);
 CREATE INDEX IF NOT EXISTS qr_scans_scanned_at_idx
   ON qr_scans (scanned_at DESC);
 CREATE INDEX IF NOT EXISTS campaigns_business_status_idx
@@ -287,6 +351,11 @@ CREATE TRIGGER loyalty_programs_set_updated_at
 DROP TRIGGER IF EXISTS loyalty_memberships_set_updated_at ON loyalty_memberships;
 CREATE TRIGGER loyalty_memberships_set_updated_at
   BEFORE UPDATE ON loyalty_memberships
+  FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+
+DROP TRIGGER IF EXISTS offers_set_updated_at ON offers;
+CREATE TRIGGER offers_set_updated_at
+  BEFORE UPDATE ON offers
   FOR EACH ROW EXECUTE FUNCTION set_updated_at();
 
 DROP TRIGGER IF EXISTS campaigns_set_updated_at ON campaigns;

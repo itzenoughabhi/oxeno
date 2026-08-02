@@ -27,7 +27,7 @@
 .hero__blob--1 {
   width: 420px;
   height: 420px;
-  background: rgba(37, 99, 235, .16);
+  background: rgba(37, 99, 235, 0.16);
   top: -160px;
   left: -120px;
   animation: floatSlow 9s ease-in-out infinite;
@@ -36,15 +36,20 @@
 .hero__blob--2 {
   width: 360px;
   height: 360px;
-  background: rgba(124, 58, 237, .14);
+  background: rgba(124, 58, 237, 0.14);
   bottom: -140px;
   right: -80px;
   animation: floatSlow 11s ease-in-out infinite reverse;
 }
 
 @keyframes floatSlow {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-26px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-26px);
+  }
 }
 
 .hero__content {
@@ -56,9 +61,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-primary-600);
   background: var(--color-primary-50);
@@ -120,7 +125,7 @@
 }
 
 .hero__proof-text {
-  font-size: .875rem;
+  font-size: 0.875rem;
   color: var(--color-ink-500);
 }
 
@@ -181,7 +186,7 @@
   flex: 1;
   border-radius: 6px 6px 0 0;
   background: var(--gradient-primary);
-  opacity: .85;
+  opacity: 0.85;
 }
 
 .dash-mock__stat {
@@ -191,7 +196,7 @@
 }
 
 .dash-mock__stat .label {
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--color-ink-500);
 }
 
@@ -204,15 +209,15 @@
 }
 
 .dash-mock__stat .delta {
-  font-size: .75rem;
-  color: #16A34A;
+  font-size: 0.75rem;
+  color: #16a34a;
   font-weight: 600;
   margin-top: 2px;
 }
 
 .float-card {
   position: absolute;
-  background: rgba(255,255,255,.85);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(10px);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
@@ -234,20 +239,25 @@
 }
 
 .float-card .txt .t {
-  font-size: .75rem;
+  font-size: 0.75rem;
   color: var(--color-ink-500);
 }
 
 .float-card .txt .v {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: .95rem;
+  font-size: 0.95rem;
   color: var(--color-ink-900);
 }
 
 @keyframes floatCard {
-  0%,100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-12px);
+  }
 }
 
 .fc-analytics {
@@ -264,7 +274,7 @@
 .fc-revenue {
   bottom: 38%;
   right: -38px;
-  animation-delay: .6s;
+  animation-delay: 0.6s;
 }
 
 .fc-revenue .ic {
@@ -279,8 +289,8 @@
 }
 
 .fc-loyalty .ic {
-  background: #DCFCE7;
-  color: #16A34A;
+  background: #dcfce7;
+  color: #16a34a;
 }
 
 .fc-campaign {
@@ -290,8 +300,8 @@
 }
 
 .fc-campaign .ic {
-  background: #FEF3C7;
-  color: #D97706;
+  background: #fef3c7;
+  color: #d97706;
 }
 
 @media (max-width: 960px) {

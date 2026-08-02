@@ -4,17 +4,20 @@ import "./Testimonials.css";
 
 const REVIEWS = [
   {
-    quote: "Our repeat customer rate jumped within the first month. The QR check-in is so simple our staff barely had to explain it.",
+    quote:
+      "Our repeat customer rate jumped within the first month. The QR check-in is so simple our staff barely had to explain it.",
     name: "Neha Kapoor",
     role: "Owner, Cafe Bloom",
   },
   {
-    quote: "The AI campaigns feel like they were written by our own marketing team — except they run themselves.",
+    quote:
+      "The AI campaigns feel like they were written by our own marketing team — except they run themselves.",
     name: "Arjun Mehta",
     role: "Founder, UrbanFit Studios",
   },
   {
-    quote: "Managing loyalty across five locations used to be a mess. Oxeno gave us one dashboard for everything.",
+    quote:
+      "Managing loyalty across five locations used to be a mess. Oxeno gave us one dashboard for everything.",
     name: "Sana Iyer",
     role: "Ops Lead, GreenLeaf Retail",
   },

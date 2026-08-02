@@ -6,7 +6,11 @@ const PLANS = [
   {
     name: "Starter",
     price: "$0",
-    features: ["Up to 500 customers", "1 QR loyalty program", "Basic analytics"],
+    features: [
+      "Up to 500 customers",
+      "1 QR loyalty program",
+      "Basic analytics",
+    ],
     cta: "Start Free",
     highlight: false,
   },
@@ -46,11 +50,7 @@ function PriceCard({ plan, delay }) {
       style={{ transitionDelay: visible ? `${delay}ms` : "0ms" }}
       className={`price-card ${highlight ? "price-card--highlight" : ""} reveal ${visible ? "is-visible" : ""}`}
     >
-      {plan.badge && (
-        <span className="price-card__badge">
-          {plan.badge}
-        </span>
-      )}
+      {plan.badge && <span className="price-card__badge">{plan.badge}</span>}
 
       <div className="price-card__name">{plan.name}</div>
       <div className="price-card__price">
@@ -63,7 +63,9 @@ function PriceCard({ plan, delay }) {
       <ul className="price-card__features">
         {plan.features.map((f) => (
           <li key={f} className="price-card__feature">
-            <span className={`price-card__feature-icon ${highlight ? "price-card__feature-icon--highlight" : ""}`}>
+            <span
+              className={`price-card__feature-icon ${highlight ? "price-card__feature-icon--highlight" : ""}`}
+            >
               ✓
             </span>
             {f}
@@ -71,7 +73,9 @@ function PriceCard({ plan, delay }) {
         ))}
       </ul>
 
-      <button className={`price-card__button ${highlight ? "price-card__button--highlight" : "price-card__button--ghost"}`}>
+      <button
+        className={`price-card__button ${highlight ? "price-card__button--highlight" : "price-card__button--ghost"}`}
+      >
         {plan.cta}
       </button>
     </div>

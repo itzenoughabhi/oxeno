@@ -20,7 +20,19 @@ export function errorHandler(error, request, response, _next) {
     return;
   }
   if (error?.code === "23505") {
-    response.status(409).json({ error: "An account with this business email already exists." });
+    const isCustomerConflict = [
+      "customers_business_id_email_key",
+      "customers_mobile_unique_idx",
+      "customers_email_unique_idx",
+    ].includes(error.constraint);
+    const isOfferCouponConflict = error.constraint === "offers_business_coupon_code_unique_idx";
+    response.status(409).json({
+      error: isCustomerConflict
+        ? "A customer account with this email or WhatsApp number already exists. Please log in."
+        : isOfferCouponConflict
+          ? "This coupon code is already being used by one of your offers."
+          : "An account with this business email already exists.",
+    });
     return;
   }
 

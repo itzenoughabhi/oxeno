@@ -32,7 +32,7 @@ function Counter({ value, suffix }) {
           observer.unobserve(el);
         }
       },
-      { threshold: 0.4 }
+      { threshold: 0.4 },
     );
     if (el) observer.observe(el);
     return () => observer.disconnect();

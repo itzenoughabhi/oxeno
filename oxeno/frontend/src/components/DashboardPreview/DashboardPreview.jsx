@@ -13,18 +13,18 @@ export default function DashboardPreview({ account }) {
         <div
           ref={headRef}
           className={`max-w-xl mx-auto text-center mb-14 transition-all duration-700 ${
-            headVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-6"
+            headVisible
+              ? "opacity-100 translate-y-0"
+              : "opacity-0 translate-y-6"
           }`}
         >
-          <span className="product-badge">
-            Product
-          </span>
+          <span className="product-badge">Product</span>
           <h2 className="font-display text-4xl md:text-5xl font-bold text-ink-900 mt-4">
             A dashboard built for growth decisions
           </h2>
           <p className="mt-4 text-lg text-ink-700">
-            Analytics, campaigns, and customer data in one clean view — the
-            way founders and marketers actually work.
+            Analytics, campaigns, and customer data in one clean view — the way
+            founders and marketers actually work.
           </p>
         </div>
 

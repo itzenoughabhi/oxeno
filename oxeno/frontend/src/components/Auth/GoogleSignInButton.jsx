@@ -1,5 +1,8 @@
 import { useEffect, useRef, useState } from "react";
-import { getGoogleClientId, loadGoogleIdentity } from "../../services/googleIdentity.js";
+import {
+  getGoogleClientId,
+  loadGoogleIdentity,
+} from "../../services/googleIdentity.js";
 
 export default function GoogleSignInButton({ onCredential, onError }) {
   const buttonRef = useRef(null);
@@ -17,7 +20,9 @@ export default function GoogleSignInButton({ onCredential, onError }) {
           client_id: getGoogleClientId(),
           callback: (response) => {
             if (!response.credential) {
-              onError("Google did not return a sign-in credential. Please try again.");
+              onError(
+                "Google did not return a sign-in credential. Please try again.",
+              );
               return;
             }
             void onCredential(response.credential);
@@ -55,5 +60,11 @@ export default function GoogleSignInButton({ onCredential, onError }) {
     return <p className="login__form-error">{loadError}</p>;
   }
 
-  return <div ref={buttonRef} className="login__google-button" aria-label="Continue with Google" />;
+  return (
+    <div
+      ref={buttonRef}
+      className="login__google-button"
+      aria-label="Continue with Google"
+    />
+  );
 }

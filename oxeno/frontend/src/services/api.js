@@ -73,3 +73,55 @@ export async function loginWithGoogle(credential) {
     body: JSON.stringify({ credential }),
   });
 }
+
+export async function getDashboardData() {
+  return request("/api/dashboard");
+}
+
+export async function getLoyaltyAwardOptions() {
+  return request("/api/dashboard/loyalty-options");
+}
+
+export async function awardLoyaltyPoints(form) {
+  return request("/api/dashboard/loyalty-points", {
+    method: "POST",
+    body: JSON.stringify(form),
+  });
+}
+
+export async function getBusinessOffers() {
+  return request("/api/dashboard/offers");
+}
+
+export async function createBusinessOffer(form) {
+  return request("/api/dashboard/offers", {
+    method: "POST",
+    body: JSON.stringify(form),
+  });
+}
+
+export async function getCustomerBusinessCategories() {
+  return request("/api/customer/business-categories");
+}
+
+export async function getCustomerBusinesses(category) {
+  return request(`/api/customer/businesses?category=${encodeURIComponent(category)}`);
+}
+
+export async function createCustomerAccount(form) {
+  return request("/api/customer-auth/signup", {
+    method: "POST",
+    body: JSON.stringify(form),
+  });
+}
+
+export async function loginCustomer(credentials) {
+  return request("/api/customer-auth/login", {
+    method: "POST",
+    body: JSON.stringify(credentials),
+  });
+}
+
+export async function getCustomerDashboardData() {
+  return request("/api/customer-dashboard");
+}

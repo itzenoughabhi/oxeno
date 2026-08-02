@@ -1,0 +1,105 @@
+.customer-auth {
+  width: 100%;
+  max-width: 680px;
+}
+
+.customer-auth--compact {
+  max-width: 440px;
+}
+
+.customer-auth__back {
+  margin-bottom: var(--space-4);
+  padding: 10px 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-ink-700);
+  cursor: pointer;
+}
+
+.customer-auth__title {
+  margin-top: var(--space-3);
+  font-size: var(--fs-display-md);
+}
+
+.customer-auth__subtitle {
+  margin-top: var(--space-2);
+  color: var(--color-ink-500);
+}
+
+.customer-auth__form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  margin-top: var(--space-5);
+}
+
+.customer-auth__section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  padding: var(--space-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+
+.customer-auth__section h2 {
+  font-size: 1rem;
+}
+
+.customer-auth__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3);
+}
+
+.customer-auth__married {
+  margin-top: var(--space-1);
+}
+
+.customer-auth__notice {
+  color: var(--color-ink-500);
+  font-size: 0.875rem;
+}
+
+.customer-auth__switch {
+  margin-top: var(--space-4);
+  color: var(--color-ink-500);
+  font-size: 0.875rem;
+  text-align: center;
+}
+
+.customer-auth__switch button {
+  border: 0;
+  background: transparent;
+  color: var(--color-primary-600);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+}
+
+.customer-auth__create-prompt {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin-top: var(--space-4);
+  padding: var(--space-4);
+  border: 1px solid var(--color-primary-100);
+  border-radius: var(--radius-md);
+  background: var(--color-primary-50);
+}
+
+.customer-auth__create-prompt h2 {
+  font-size: 1rem;
+}
+
+.customer-auth__create-prompt p {
+  color: var(--color-ink-600);
+  font-size: 0.875rem;
+}
+
+@media (max-width: 640px) {
+  .customer-auth__grid {
+    grid-template-columns: 1fr;
+  }
+}

@@ -29,12 +29,12 @@
 }
 
 .field__input--error {
-  border-color: #DC2626;
+  border-color: #dc2626;
 }
 
 .field__error {
   font-size: 0.8125rem;
-  color: #DC2626;
+  color: #dc2626;
 }
 
 .checkbox {

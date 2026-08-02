@@ -12,28 +12,27 @@
 /* ----------------- Design Tokens ----------------- */
 
 :root {
-  --color-primary-700:#1D4ED8;
-  --color-primary-600:#2563EB;
-  
+  --color-primary-700: #1d4ed8;
+  --color-primary-600: #2563eb;
 }
 
 /* Global Styles */
 
 *,
 *::before,
-*::after{
-  box-sizing:border-box;
+*::after {
+  box-sizing: border-box;
 }
 
-html{
-  scroll-behavior:smooth;
+html {
+  scroll-behavior: smooth;
 }
 
-body{
-  margin:0;
-  font-family:var(--font-body);
-  background:var(--gradient-hero-bg);
-  color:var(--color-ink-700);
-  min-height:100vh;
-  overflow-x:hidden;
+body {
+  margin: 0;
+  font-family: var(--font-body);
+  background: var(--gradient-hero-bg);
+  color: var(--color-ink-700);
+  min-height: 100vh;
+  overflow-x: hidden;
 }

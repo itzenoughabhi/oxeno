@@ -14,7 +14,8 @@
     "test": "node --test",
     "lint": "eslint server tests",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "db:reset:tenant": "node --env-file=.env scripts/resetTenantData.js"
   },
   "dependencies": {
     "dotenv": "^16.4.1",

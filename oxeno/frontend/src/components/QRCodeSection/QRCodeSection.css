@@ -18,9 +18,9 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   font-weight: 600;
-  letter-spacing: .06em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--color-primary-600);
   background: var(--color-primary-50);
@@ -54,7 +54,7 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
-  font-size: .9375rem;
+  font-size: 0.9375rem;
   color: var(--color-ink-700);
 }
 
@@ -68,7 +68,7 @@
   place-items: center;
   flex-shrink: 0;
   margin-top: 1px;
-  font-size: .75rem;
+  font-size: 0.75rem;
 }
 
 .qr-section__cta {
@@ -108,20 +108,31 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, transparent, var(--color-primary-500), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--color-primary-500),
+    transparent
+  );
   animation: scanLine 2.4s ease-in-out infinite;
 }
 
 @keyframes scanLine {
-  0% { top: 6%; }
-  50% { top: 94%; }
-  100% { top: 6%; }
+  0% {
+    top: 6%;
+  }
+  50% {
+    top: 94%;
+  }
+  100% {
+    top: 6%;
+  }
 }
 
 .qr-card__label {
   margin-top: 16px;
   text-align: center;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   color: var(--color-ink-500);
 }
 
@@ -140,7 +151,11 @@
 .qr-phone__screen {
   width: 100%;
   height: 100%;
-  background: linear-gradient(160deg, var(--color-primary-600), var(--color-accent-600));
+  background: linear-gradient(
+    160deg,
+    var(--color-primary-600),
+    var(--color-accent-600)
+  );
   border-radius: 18px;
   display: grid;
   place-items: center;

@@ -8,7 +8,9 @@ export function cors(allowedOrigins) {
     }
 
     response.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    response.set("Access-Control-Allow-Headers", "Content-Type");
+    // Customer and business dashboards send a JWT using the Authorization header.
+    // This header must be explicitly allowed in the browser's CORS preflight response.
+    response.set("Access-Control-Allow-Headers", "Authorization, Content-Type");
 
     if (request.method === "OPTIONS") {
       response.sendStatus(204);
