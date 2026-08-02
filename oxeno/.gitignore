@@ -21,6 +21,9 @@ frontend/.env.*.local
 backend/.env
 backend/.env.local
 backend/.env.*.local
+frontend/.env.example
+backend/.env.example
+*.env.example
 
 # Editor directories and files
 .vscode/*
