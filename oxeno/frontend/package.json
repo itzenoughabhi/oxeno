@@ -1,8 +1,12 @@
 {
-  "name": "oxeno",
+  "name": "oxeno-frontend",
   "private": true,
   "version": "0.0.0",
+  "description": "Oxeno frontend application.",
   "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "vite",
     "build": "vite build",

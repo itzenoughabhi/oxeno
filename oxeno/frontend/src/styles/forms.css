@@ -1,0 +1,47 @@
+/* src/styles/forms.css
+   Shared field/checkbox styles for auth pages (Login, SignUp). */
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field__label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-ink-700);
+}
+
+.field__input {
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 0.9375rem;
+  font-family: var(--font-body);
+  color: var(--color-ink-900);
+  background: var(--color-surface);
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.field__input:focus-visible {
+  border-color: var(--color-primary-600);
+}
+
+.field__input--error {
+  border-color: #DC2626;
+}
+
+.field__error {
+  font-size: 0.8125rem;
+  color: #DC2626;
+}
+
+.checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.875rem;
+  color: var(--color-ink-700);
+  cursor: pointer;
+}

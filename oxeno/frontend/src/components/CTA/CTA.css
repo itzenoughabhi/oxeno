@@ -1,0 +1,102 @@
+.cta {
+  padding: var(--space-10) 0;
+}
+
+.cta__wrapper {
+  width: min(100%, 1240px);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.cta__panel {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  border-radius: var(--radius-2xl);
+  padding: 4rem 2.5rem;
+  background: linear-gradient(135deg, var(--color-primary-700), var(--color-accent-600), #7c3aed);
+  color: white;
+}
+
+.cta__glow {
+  position: absolute;
+  border-radius: 999px;
+  opacity: 0.35;
+  filter: blur(48px);
+}
+
+.cta__glow--top {
+  width: 420px;
+  height: 420px;
+  top: -180px;
+  left: -140px;
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.cta__glow--bottom {
+  width: 300px;
+  height: 300px;
+  bottom: -120px;
+  right: -80px;
+  background: rgba(255, 255, 255, 0.16);
+}
+
+.cta__content {
+  position: relative;
+  z-index: 1;
+}
+
+.cta__title {
+  font-size: clamp(2rem, 1.8rem + 1vw, 3rem);
+  line-height: 1.05;
+  font-weight: 800;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.cta__subtitle {
+  margin-top: 1rem;
+  font-size: 1.125rem;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta__actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 2.25rem;
+}
+
+.cta__button {
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  padding: 1rem 2.25rem;
+  border: none;
+  cursor: pointer;
+  transition: transform var(--dur-base) var(--ease-out), background var(--dur-base) var(--ease-out);
+}
+
+.cta__button--primary {
+  background: white;
+  color: var(--color-primary-700);
+}
+
+.cta__button--ghost {
+  background: rgba(255, 255, 255, 0.12);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.32);
+}
+
+.cta__button:hover {
+  transform: translateY(-2px);
+}
+
+@media (max-width: 640px) {
+  .cta__panel {
+    padding: 3rem 1.5rem;
+  }
+}

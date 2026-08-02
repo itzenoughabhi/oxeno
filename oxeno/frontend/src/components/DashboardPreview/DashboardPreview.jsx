@@ -2,9 +2,10 @@
 import useReveal from "../../hooks/useReveal";
 import "./DashboardPreview.css";
 
-export default function DashboardPreview() {
+export default function DashboardPreview({ account }) {
   const [headRef, headVisible] = useReveal();
   const [panelRef, panelVisible] = useReveal();
+  const userName = account?.user?.name || "A customer";
 
   return (
     <section className="dashboard-section">
@@ -70,7 +71,7 @@ export default function DashboardPreview() {
                 <h4>Customer List</h4>
                 <div className="dlist">
                   {[
-                    ["Aarav Sharma", "Gold · 12 visits"],
+                    [userName, "Gold · 12 visits"],
                     ["Priya Nair", "Silver · 6 visits"],
                     ["Rohit Verma", "Gold · 19 visits"],
                   ].map(([a, b]) => (

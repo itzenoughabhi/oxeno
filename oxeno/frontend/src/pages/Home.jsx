@@ -7,14 +7,14 @@ import Testimonials from '../components/Testimonials/Testimonials.jsx'
 import PricingPreview from '../components/PricingPreview/PricingPreview.jsx'
 import CTA from '../components/CTA/CTA.jsx'
 
-export default function Home() {
+export default function Home({ account }) {
   return (
     <main className="font-body text-ink-700 bg-white">
       <Hero />
       <Stats />
       <Features />
       <QRCodeSection />
-      <DashboardPreview />
+      <DashboardPreview account={account} />
       <Testimonials />
       <PricingPreview />
       <CTA />

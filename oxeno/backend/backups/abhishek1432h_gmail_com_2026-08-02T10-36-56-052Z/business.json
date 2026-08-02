@@ -1,0 +1,17 @@
+[
+  {
+    "id": "4d198693-7934-4476-9e70-2330ef677d2e",
+    "name": "abhishek",
+    "business_type": "Spa",
+    "email": "abhishek1432h@gmail.com",
+    "mobile": "8767769055",
+    "address_line": "Ramvihar society C-3/5 room no 03 Trivedi nagar saravali palghar road boisar",
+    "city": "BOISAR",
+    "state": "Maharashtra",
+    "country": "India",
+    "postal_code": "401501",
+    "is_active": true,
+    "created_at": "2026-08-02T08:27:35.373Z",
+    "updated_at": "2026-08-02T08:27:35.373Z"
+  }
+]

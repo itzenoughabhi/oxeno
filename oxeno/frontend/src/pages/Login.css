@@ -1,0 +1,129 @@
+.login__panel {
+  width: 100%;
+  max-width: 420px;
+}
+
+.login__back {
+  margin-bottom: var(--space-4);
+  padding: 10px 16px;
+  border-radius: var(--radius-full);
+  background: transparent;
+  color: var(--color-ink-700);
+  border: 1px solid var(--color-border-strong);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out), color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+
+.login__back:hover {
+  background: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.login__title {
+  font-size: var(--fs-display-md);
+  margin-top: var(--space-3);
+}
+
+.login__subtitle {
+  margin-top: var(--space-2);
+  color: var(--color-ink-500);
+  font-size: 0.9375rem;
+}
+
+.login__form {
+  margin-top: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.login__options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.login__link {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-primary-600);
+}
+
+.login__link:hover {
+  text-decoration: underline;
+}
+
+.login__link--button {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  font-family: var(--font-body);
+}
+
+.login__form-error {
+  font-size: 0.875rem;
+  color: #DC2626;
+  background: #FEF2F2;
+  border: 1px solid #FECACA;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.login__form-success {
+  font-size: 0.875rem;
+  color: #15803D;
+  background: #F0FDF4;
+  border: 1px solid #BBF7D0;
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+}
+
+.login__signup {
+  text-align: center;
+  font-size: 0.875rem;
+  color: var(--color-ink-500);
+  margin-top: var(--space-2);
+}
+
+.login__google-button {
+  min-height: 44px;
+  display: flex;
+  justify-content: center;
+}
+
+.login__modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(15 23 42 / 52%);
+}
+
+.login__modal {
+  width: min(100%, 380px);
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--color-surface, #fff);
+  box-shadow: 0 20px 45px rgb(15 23 42 / 24%);
+}
+
+.login__modal h3 {
+  font-size: 1.125rem;
+}
+
+.login__modal p {
+  margin-top: var(--space-2);
+  color: var(--color-ink-500);
+}
+
+.login__modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}

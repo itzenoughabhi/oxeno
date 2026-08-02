@@ -1,0 +1,13 @@
+[
+  {
+    "id": "1b061e5c-e582-4f6d-b8cb-d52db4a47df5",
+    "business_id": "4d198693-7934-4476-9e70-2330ef677d2e",
+    "plan_id": "starter",
+    "status": "active",
+    "started_at": "2026-08-02T08:27:35.373Z",
+    "renews_at": null,
+    "cancelled_at": null,
+    "created_at": "2026-08-02T08:27:35.373Z",
+    "updated_at": "2026-08-02T08:27:35.373Z"
+  }
+]
