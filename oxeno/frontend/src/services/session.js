@@ -14,10 +14,11 @@ export function getStoredSession() {
   return readSession(localStorage) || readSession(sessionStorage);
 }
 
-export function saveSession(account, remember = false) {
+export function saveSession(account, remember = false, accessToken) {
   const session = {
     user: account.user,
     business: account.business,
+    ...(accessToken ? { accessToken } : {}),
   };
   const targetStorage = remember ? localStorage : sessionStorage;
   const otherStorage = remember ? sessionStorage : localStorage;

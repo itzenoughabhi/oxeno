@@ -12,8 +12,8 @@ function App() {
   const [page, setPage] = useState('home') // 'home' | 'login' | 'signup' | 'dashboard'
   const [account, setAccount] = useState(() => getStoredSession())
 
-  function handleLogin(loginAccount, remember) {
-    setAccount(saveSession(loginAccount, remember))
+  function handleLogin(loginAccount, remember, accessToken) {
+    setAccount(saveSession(loginAccount, remember, accessToken))
     setPage('dashboard')
   }
 

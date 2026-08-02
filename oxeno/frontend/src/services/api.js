@@ -1,3 +1,5 @@
+import { getStoredSession } from "./session.js";
+
 const apiBaseUrl = import.meta.env.VITE_API_URL || "http://localhost:3001";
 
 class ApiError extends Error {
@@ -12,10 +14,12 @@ async function request(path, options = {}) {
   let response;
 
   try {
+    const accessToken = getStoredSession()?.accessToken;
     response = await fetch(`${apiBaseUrl}${path}`, {
       ...options,
       headers: {
         "Content-Type": "application/json",
+        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
         ...(options.headers || {}),
       },
     });

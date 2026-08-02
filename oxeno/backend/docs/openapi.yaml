@@ -1,0 +1,216 @@
+openapi: 3.1.1
+info:
+  title: Oxeno API
+  version: 1.0.0
+  description: Express API for Oxeno business accounts and authentication.
+servers:
+  - url: http://localhost:3001
+security:
+  - bearerAuth: []
+paths:
+  /api/health:
+    get:
+      security: []
+      summary: Check API and database health
+      responses:
+        "200":
+          description: API and database are available.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthResponse"
+  /api/auth/signup:
+    post:
+      security: []
+      summary: Create a business account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SignupRequest"
+      responses:
+        "201":
+          description: Account created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SignupResponse"
+        "400":
+          $ref: "#/components/responses/ValidationError"
+        "409":
+          $ref: "#/components/responses/Conflict"
+  /api/auth/login:
+    post:
+      security: []
+      summary: Log in with email and password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Authenticated account and Bearer access token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+  /api/auth/google:
+    post:
+      security: []
+      summary: Log in using a verified Google ID token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [credential]
+              properties:
+                credential:
+                  type: string
+      responses:
+        "200":
+          description: Authenticated account and Bearer access token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LoginResponse"
+  /api/auth/me:
+    get:
+      summary: Read the claims from the current access token
+      responses:
+        "200":
+          description: Valid token claims.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  auth:
+                    $ref: "#/components/schemas/TokenClaims"
+        "401":
+          $ref: "#/components/responses/Unauthorized"
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    HealthResponse:
+      type: object
+      required: [status]
+      properties:
+        status:
+          type: string
+          example: ok
+    SignupRequest:
+      type: object
+      required:
+        - businessName
+        - ownerName
+        - businessEmail
+        - mobile
+        - password
+        - confirmPassword
+        - businessType
+        - country
+        - state
+        - city
+        - zip
+        - address
+        - plan
+        - agreeTerms
+        - agreePrivacy
+      properties:
+        businessName: { type: string }
+        ownerName: { type: string }
+        businessEmail: { type: string, format: email }
+        mobile: { type: string }
+        password: { type: string, format: password, minLength: 8 }
+        confirmPassword: { type: string, format: password }
+        businessType: { type: string }
+        country: { type: string }
+        state: { type: string }
+        city: { type: string }
+        zip: { type: string }
+        address: { type: string }
+        plan: { type: string, enum: [starter, growth, pro] }
+        agreeTerms: { type: boolean }
+        agreePrivacy: { type: boolean }
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email: { type: string, format: email }
+        password: { type: string, format: password }
+    Account:
+      type: object
+      properties:
+        user:
+          type: object
+          properties:
+            id: { type: string, format: uuid }
+            name: { type: string }
+            email: { type: string, format: email }
+            role: { type: string, enum: [owner, manager, staff] }
+        business:
+          type: object
+          properties:
+            id: { type: string, format: uuid }
+            name: { type: string }
+            plan: { type: string }
+    SignupResponse:
+      type: object
+      properties:
+        message: { type: string }
+        account:
+          type: object
+          properties:
+            businessId: { type: string, format: uuid }
+            userId: { type: string, format: uuid }
+    LoginResponse:
+      type: object
+      properties:
+        message: { type: string }
+        accessToken: { type: string }
+        tokenType: { type: string, example: Bearer }
+        account:
+          $ref: "#/components/schemas/Account"
+    TokenClaims:
+      type: object
+      properties:
+        sub: { type: string, format: uuid }
+        businessId: { type: string, format: uuid }
+        role: { type: string }
+        iat: { type: integer }
+        exp: { type: integer }
+    Error:
+      type: object
+      properties:
+        error: { type: string }
+        code: { type: string }
+  responses:
+    ValidationError:
+      description: Request validation failed.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Unauthorized:
+      description: Authentication failed.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
+    Conflict:
+      description: A conflicting record already exists.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"

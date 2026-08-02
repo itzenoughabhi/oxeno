@@ -42,7 +42,7 @@ export default function Login({ onNavigate, onLogin }) {
       setErrors({});
       const response = await login(form);
       setStatus("success");
-      onLogin?.(response.account, form.rememberMe);
+      onLogin?.(response.account, form.rememberMe, response.accessToken);
     } catch (err) {
       setStatus("error");
       setErrors({ form: err.message || "Login failed. Check your email and password and try again." });
@@ -55,7 +55,7 @@ export default function Login({ onNavigate, onLogin }) {
       setErrors({});
       const response = await loginWithGoogle(credential);
       setStatus("success");
-      onLogin?.(response.account, form.rememberMe);
+      onLogin?.(response.account, form.rememberMe, response.accessToken);
     } catch (err) {
       if (err.code === "account_not_found") {
         setStatus(null);
