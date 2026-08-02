@@ -162,33 +162,3 @@
     display: none;
   }
 }
-
-@media (max-width: 640px) {
-  .qr-section__inner {
-    gap: var(--space-6);
-  }
-
-  .qr-section__inner > div:first-child {
-    text-align: center;
-  }
-
-  .qr-section__desc {
-    margin-inline: auto;
-    font-size: 1rem;
-  }
-
-  .qr-benefits {
-    gap: 12px;
-    text-align: left;
-  }
-
-  .qr-section__cta {
-    width: 100%;
-  }
-
-  .qr-card {
-    width: min(100%, 272px);
-    padding: 20px;
-    border-radius: var(--radius-xl);
-  }
-}

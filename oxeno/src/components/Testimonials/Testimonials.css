@@ -91,16 +91,7 @@
 }
 
 @media (max-width: 640px) {
-  .testimonials__header {
-    margin-bottom: 2rem;
-  }
-
   .testimonials__grid {
     grid-template-columns: 1fr;
-  }
-
-  .review-card {
-    border-radius: var(--radius-xl);
-    padding: 1.5rem;
   }
 }

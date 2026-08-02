@@ -97,23 +97,6 @@
 
 @media (max-width: 640px) {
   .cta__panel {
-    border-radius: var(--radius-xl);
-    padding: 3rem 1.25rem;
-  }
-
-  .cta__subtitle {
-    font-size: 1rem;
-  }
-
-  .cta__actions {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 12px;
-    margin-top: 1.75rem;
-  }
-
-  .cta__button {
-    width: 100%;
-    padding: .9375rem 1.25rem;
+    padding: 3rem 1.5rem;
   }
 }

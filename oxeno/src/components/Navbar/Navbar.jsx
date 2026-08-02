@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
+import BusinessProfileMenu from "./BusinessProfileMenu.jsx";
 import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ onNavigate }) => {
   const [open, setOpen] = useState(false);
 
   const navLinks = [
@@ -14,12 +15,24 @@ const Navbar = () => {
     "Contact",
   ];
 
+  function go(page) {
+    setOpen(false);
+    onNavigate?.(page);
+  }
+
   return (
     <header className="navbar">
       <div className="navbar__inner container">
 
         {/* Logo */}
-        <a href="/" className="navbar__logo">
+        <a
+          href="/"
+          className="navbar__logo"
+          onClick={(e) => {
+            e.preventDefault();
+            go("home");
+          }}
+        >
           <div className="navbar__logo-mark">
             <span className="navbar__logo-pulse" />
             <span className="navbar__logo-dot" />
@@ -31,16 +44,26 @@ const Navbar = () => {
         {/* Desktop Menu */}
         <nav className="navbar__links">
           {navLinks.map((item) => (
-            <a key={item} href="#" className="navbar__link">
+            <a
+              key={item}
+              href="#"
+              className="navbar__link"
+              onClick={(e) => {
+                e.preventDefault();
+                go("home");
+              }}
+            >
               {item}
             </a>
           ))}
         </nav>
 
-        {/* Desktop Buttons */}
+        {/* Desktop Actions */}
         <div className="navbar__actions">
-          <button className="navbar__login">Login</button>
-          <button className="navbar__cta">Get Started</button>
+          <button className="navbar__login" onClick={() => go("login")}>
+            Login
+          </button>
+          <BusinessProfileMenu onNavigate={go} />
         </div>
 
         {/* Mobile Button */}
@@ -60,7 +83,10 @@ const Navbar = () => {
             <a
               key={item}
               href="#"
-              onClick={() => setOpen(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                go("home");
+              }}
               className="navbar__mobile-link"
             >
               {item}
@@ -69,12 +95,13 @@ const Navbar = () => {
         </div>
 
         <div className="navbar__mobile-actions">
-          <button className="navbar__mobile-button navbar__mobile-button--ghost">
+          <button
+            className="navbar__mobile-button navbar__mobile-button--ghost"
+            onClick={() => go("login")}
+          >
             Login
           </button>
-          <button className="navbar__mobile-button navbar__mobile-button--primary">
-            Get Started
-          </button>
+          <BusinessProfileMenu onNavigate={go} />
         </div>
       </div>
     </header>

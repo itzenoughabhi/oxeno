@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 :root {
   --color-primary-700: #1D4ED8;
   --color-primary-600: #2563EB;
@@ -276,36 +278,3 @@ section {
 .d5 { transition-delay: 450ms; }
 .d6 { transition-delay: 540ms; }
 
-@media (max-width: 640px) {
-  :root {
-    --nav-height: 68px;
-    --container-pad: 20px;
-    --space-10: 72px;
-    --space-9: 56px;
-    --space-8: 48px;
-    --space-7: 40px;
-    --space-6: 32px;
-    --space-5: 24px;
-    --space-4: 20px;
-    --fs-display-xl: clamp(2.35rem, 10vw, 2.75rem);
-    --fs-display-lg: 2.25rem;
-    --fs-display-md: 1.9rem;
-  }
-
-  body {
-    overflow-x: hidden;
-  }
-
-  .section-head p {
-    font-size: 1rem;
-  }
-
-  .btn-lg {
-    padding: 14px 24px;
-    font-size: 1rem;
-  }
-}
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
